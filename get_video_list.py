@@ -1,4 +1,5 @@
 import requests
+import video_info as vi
 
 page_num = 1
 stop = False
@@ -15,20 +16,19 @@ def record_video_info(videos, start, end, video_list):
     for video in videos:
         if video["copyright"] == 1: # 1 is original
             if start < video["pubdate"] < end:
-                video_info = {video["aid"]: get_video_info(video["stat"])}
+                video_info = get_video_info(video["aid"], video["stat"])
                 video_list.append(video_info)
                 end = video["pubdate"]
             elif video["pubdate"] <= start:
                 stop = True
 
-def get_video_info(video_stat):
-    video_info = {
-        "view": video_stat["view"],
-        "like": video_stat["like"],
-        "coin": video_stat["coin"],
-        "favorite": video_stat["favorite"]
-    }
-    return video_info
+def get_video_info(video_aid, video_stat):
+    video_info = vi.VideoInfo(video_aid,
+                           video_stat["view"],
+                           video_stat["like"],
+                           video_stat["coin"],
+                           video_stat["favorite"])
+    return video_info.to_dic()
 
 def get_video_list():
     global page_num, stop
@@ -37,7 +37,6 @@ def get_video_list():
 
     # January
     for day in range(31):
-        print(day)
         stop = False
         video_list = []
         day_sec = 86400
@@ -45,7 +44,6 @@ def get_video_list():
         # start = 1577808000
         end = 1580486400 - (day_sec * day)
         start = end - day_sec
-        print(start)
 
         # won't stop until hitting the start datetime
         while not stop:
