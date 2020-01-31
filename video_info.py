@@ -29,13 +29,14 @@ class VideoInfo:
         top_favorite = _compare_helper(self.aid, self.favorite, top_list[3], "favorite")
         return [top_view, top_like, top_coin, top_favorite]
 
+
 def _compare_helper(aid, value, top_record, name):
     if value == 0:
         return top_record
 
     if value == top_record[name]:
-        return {name:value, "aids":top_record["aids"].append(aid)}
+        return {name: value, "aids": top_record["aids"].append(aid)}
     elif value > top_record[name]:
-        return {name:value, "aids":[aid]}
+        return {name: value, "aids": [aid]}
     else:
         return top_record

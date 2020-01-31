@@ -3,10 +3,11 @@ import video_info as vi
 
 page_num = 1
 stop = False
-top_list = [{"view":0, "aids":[]},
-            {"like":0, "aids":[]},
-            {"coin":0, "aids":[]},
-            {"favorite":0, "aids":[]}]
+top_list = [{"view": 0, "aids": []},
+            {"like": 0, "aids": []},
+            {"coin": 0, "aids": []},
+            {"favorite": 0, "aids": []}]
+
 
 def get_video_list_response(page_number=None):
     url = "http://api.bilibili.com/x/web-interface/newlist?rid=25" # 25 is MMD/3D
@@ -14,6 +15,7 @@ def get_video_list_response(page_number=None):
         url += "&pn=%d" % page_number
     response = requests.get(url)
     return response.json()
+
 
 def record_video_info(videos, start, end, video_list):
     global stop
@@ -26,15 +28,17 @@ def record_video_info(videos, start, end, video_list):
             elif video["pubdate"] <= start:
                 stop = True
 
+
 def get_video_info(video_aid, video_stat):
     global top_list
     video_info = vi.VideoInfo(video_aid,
-                           video_stat["view"],
-                           video_stat["like"],
-                           video_stat["coin"],
-                           video_stat["favorite"])
+                              video_stat["view"],
+                              video_stat["like"],
+                              video_stat["coin"],
+                              video_stat["favorite"])
     top_list = video_info.compare(top_list)
     return video_info.to_dic()
+
 
 def get_video_list():
     global page_num, stop
@@ -42,7 +46,7 @@ def get_video_list():
 
     # January
     for day in range(31):
-        #print(day)
+        print(day)
         stop = False
         video_list = []
         day_sec = 86400
