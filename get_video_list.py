@@ -62,18 +62,18 @@ def get_video_info(video_aid, video_stat):
 
 def get_video_list():
     global page_num, stop
-    f = open("video_list_Feb.txt", "w+")
+    f = open("2020/video_list_Mar.txt", "w+")
 
-    # Feb
-    day_num = 29
+    # Mar
+    day_num = 31
     for day in range(day_num):
         print("day: " + str(day_num - day))
         stop = False
         video_list = []
         day_sec = 86400
 
-        end = 1582992000 - (day_sec * day)
-        start = end - day_sec # 2020.02.01 00:00:00 => 1580486400
+        end = 1585670400 - (day_sec * day)
+        start = end - day_sec # 2020.03.01 00:00:00 => 1582992000
 
         # won't stop until hitting the start datetime
         while not stop:
